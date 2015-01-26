@@ -1,0 +1,27 @@
+<package type="addon" name="nuxeo-travel-expenses" version="@VERSION@">
+  <title>Nuxeo Travel Expenses</title>
+  <description>
+    <p>This is a sample addon to demonstrate usage of the Workflow REST API.</p>
+  </description>
+  <home-page></home-page>
+  <vendor>Nuxeo</vendor>
+  <installer restart="true" />
+  <uninstaller restart="true" />
+  <!-- <hotreload-support>false</hotreload-support> -->
+  <!-- <require-terms-and-conditions-acceptance>false</require-terms-and-conditions-acceptance> -->
+  <!-- <nuxeo-validation>none</nuxeo-validation> -->
+  <!-- <nuxeo-validation>inprocess</nuxeo-validation> -->
+  <!-- <nuxeo-validation>primary_validation</nuxeo-validation> -->
+  <nuxeo-validation>nuxeo_certified</nuxeo-validation>
+  <!-- <production-state>proto</production-state> -->
+  <production-state>testing</production-state>
+  <!-- <production-state>production_ready</production-state> -->
+  <supported>true</supported>
+  <platforms>
+    <platform>cap-@DISTRIB_VERSION@</platform>
+    <platform>cap-@DISTRIB_VERSION@-HF*</platform>
+  </platforms>
+  <license>LGPL 2.1</license>
+  <license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
+  <visibility>PUBLIC</visibility>
+</package>
