@@ -16,7 +16,7 @@
  */
 package org.nuxeo.functionaltests;
 
-import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import org.nuxeo.functionaltests.elements.TaskElement;
@@ -26,6 +26,10 @@ import org.nuxeo.functionaltests.elements.tasks.ValidateExpense;
 import org.nuxeo.functionaltests.elements.tasks.CreateExpense;
 import org.nuxeo.functionaltests.pages.DocumentBasePage.UserNotConnectedException;
 import org.nuxeo.functionaltests.elements.tasks.AccountExpense;
+import org.nuxeo.functionaltests.pages.admincenter.AdminCenterBasePage;
+import org.nuxeo.functionaltests.pages.admincenter.usermanagement.GroupsTabSubPage;
+import org.nuxeo.functionaltests.pages.admincenter.usermanagement.UsersGroupsBasePage;
+import org.nuxeo.functionaltests.pages.admincenter.usermanagement.UsersTabSubPage;
 import org.openqa.selenium.support.ui.Select;
 
 import java.net.MalformedURLException;
@@ -40,6 +44,15 @@ import static org.junit.Assert.assertNotNull;
  */
 public class ITTravelExpensesTest extends AbstractTest {
 
+    public static final String MEMBERS_GROUP = "members";
+    public static final String MANAGERS_GROUP = "managers";
+    public static final String ACCOUNTANTS_GROUP = "accountancy";
+
+    public static final String MANAGER_USER = "manager";
+    public static final String ACCOUNTANT_USER = "accountant";
+
+    private static boolean isSetupDone = false;
+
     private TravelExpensesApp getApp() throws MalformedURLException {
         navToUrl(NUXEO_URL + "/travel-expenses");
         return asPage(TravelExpensesApp.class);
@@ -47,7 +60,7 @@ public class ITTravelExpensesTest extends AbstractTest {
 
     @Test
     public void testListingsAreAvailable() throws Exception {
-        loginAsUser();
+        loginAsTestUser();
 
         TravelExpensesApp app = getApp();
 
@@ -62,16 +75,20 @@ public class ITTravelExpensesTest extends AbstractTest {
     public void testExpenseWorkflow() throws Exception {
 
         // create
-        loginAsUser();
+        loginAsTestUser();
 
         TravelExpensesApp app = getApp();
 
         TaskListElement taskList = app.gotoTaskList();
         taskList.createTask();
 
+        app.goBack();
+        assertEquals(1, app.getTaskList().size());
+        taskList.selectTask(0);
+
         CreateExpense create = TaskElement.of(CreateExpense.class);
         assertEquals(1, create.getActors().size());
-        assertEquals("Administrator", create.getActors().get(0));
+        assertEquals(TEST_USERNAME, create.getActors().get(0));
         assertEquals("Submit for validation", create.getDirective());
 
         create.label.sendKeys("A label");
@@ -82,12 +99,13 @@ public class ITTravelExpensesTest extends AbstractTest {
 
         app.goBack();
 
-        assertEquals(1, app.getTaskList().size());
+        // task is no longer assigned to initiator
+        assertEquals(0, app.getTaskList().size());
 
         logout();
 
         // validate
-        loginAsAccountant();
+        loginAsManager();
         app = getApp();
 
         taskList = app.gotoTaskList();
@@ -104,11 +122,17 @@ public class ITTravelExpensesTest extends AbstractTest {
         assertEquals("A description", validate.description.getText());
         assertEquals("transportation", validate.nature.getText());
         validate.action("validate");
+
+        app.goBack();
+
+        // task is no longer assigned to manager
+        assertEquals(0, app.getTaskList().size());
+
         logout();
 
         // account
 
-        loginAsManager();
+        loginAsAccountant();
         app = getApp();
 
         taskList = app.gotoTaskList();
@@ -122,7 +146,7 @@ public class ITTravelExpensesTest extends AbstractTest {
 
         assertEquals("A label", account.label.getText());
         assertEquals("A description", account.description.getText());
-        // TODO: assertEquals("500", account.amount.getText());
+        assertEquals("500", account.amount.getText());
         assertEquals("transportation", account.nature.getText());
 
         account.customerCode.sendKeys("C101");
@@ -136,7 +160,7 @@ public class ITTravelExpensesTest extends AbstractTest {
 
     @Test
     public void testDeleteExpense() throws Exception {
-        loginAsUser();
+        loginAsTestUser();
 
         TravelExpensesApp app = getApp();
 
@@ -151,22 +175,79 @@ public class ITTravelExpensesTest extends AbstractTest {
         assertEquals(0, tasks.size());
     }
 
-    @After
-    public void tearDown() {
+    @Before
+    public void setUp() throws UserNotConnectedException {
+        if (isSetupDone) {
+            return;
+        }
+        AjaxRequestManager ajax = new AjaxRequestManager(driver);
+        AdminCenterBasePage admin = login().getAdminCenter();
+
+        // create users
+        UsersTabSubPage usersTab = admin.getUsersGroupsHomePage().getUsersTab().searchUser(TEST_USERNAME);
+        if (!usersTab.isUserFound(TEST_USERNAME)) {
+            ajax.watchAjaxRequests();
+            usersTab.getUserCreatePage().createUser(TEST_USERNAME, TEST_USERNAME, "", "", "email1", TEST_PASSWORD, MEMBERS_GROUP);
+            ajax.waitForAjaxRequests();
+        }
+        usersTab = admin.getUsersGroupsHomePage().getUsersTab(true).searchUser(MANAGER_USER);
+        if (!usersTab.isUserFound(MANAGER_USER)) {
+            ajax.watchAjaxRequests();
+            usersTab.getUserCreatePage().createUser(MANAGER_USER, MANAGER_USER, "", "", "email2", TEST_PASSWORD, MEMBERS_GROUP);
+            ajax.waitForAjaxRequests();
+        }
+        usersTab = admin.getUsersGroupsHomePage().getUsersTab().searchUser(ACCOUNTANT_USER);
+        if (!usersTab.isUserFound(ACCOUNTANT_USER)) {
+            ajax.watchAjaxRequests();
+            usersTab.getUserCreatePage().createUser(ACCOUNTANT_USER, ACCOUNTANT_USER, "", "", "email3", TEST_PASSWORD, MEMBERS_GROUP);
+            ajax.waitForAjaxRequests();
+        }
+
+        // create groups
+        GroupsTabSubPage groupsTab = admin.getUsersGroupsHomePage().getGroupsTab().searchGroup(MANAGERS_GROUP);
+        if (!groupsTab.isGroupFound(MANAGERS_GROUP)) {
+            ajax.watchAjaxRequests();
+            groupsTab.getGroupCreatePage().createGroup(MANAGERS_GROUP, MANAGERS_GROUP, new String[] { MANAGER_USER }, null);
+            ajax.waitForAjaxRequests();
+        }
+        groupsTab = admin.getUsersGroupsHomePage().getGroupsTab(true).searchGroup(ACCOUNTANTS_GROUP);
+        if (!groupsTab.isGroupFound(ACCOUNTANTS_GROUP)) {
+            ajax.watchAjaxRequests();
+            groupsTab.getGroupCreatePage().createGroup(ACCOUNTANTS_GROUP, ACCOUNTANTS_GROUP, new String[]{ ACCOUNTANT_USER }, null);
+            ajax.waitForAjaxRequests();
+        }
+
+        logout();
+        isSetupDone = true;
+    }
+
+    // TODO: remove test users and groups
+    public void tearDown() throws UserNotConnectedException {
+        UsersGroupsBasePage usersGroupsPage = login().getAdminCenter().getUsersGroupsHomePage();
+        UsersTabSubPage usersTab = usersGroupsPage.getUsersTab();
+        usersTab = usersTab.searchUser(TEST_USERNAME);
+        if (usersTab.isUserFound(TEST_USERNAME)) {
+            usersTab.viewUser(TEST_USERNAME).deleteUser();
+        }
+        usersTab = usersGroupsPage.getUsersTab();
+        usersTab = usersTab.searchUser(MANAGER_USER);
+        if (usersTab.isUserFound(MANAGER_USER)) {
+            usersTab.viewUser(MANAGER_USER).deleteUser();
+        }
+        usersTab = usersGroupsPage.getUsersTab();
+        usersTab = usersTab.searchUser(ACCOUNTANT_USER);
+        if (usersTab.isUserFound(ACCOUNTANT_USER)) {
+            usersTab.viewUser(ACCOUNTANT_USER).deleteUser();
+        }
         logout();
     }
 
-    // TODO: fix authentication with other users besides Administrator
-    // see https://jira.nuxeo.com/browse/NXP-16601 / https://jira.nuxeo.com/browse/NXJS-19
     private void loginAsAccountant() throws UserNotConnectedException {
-        login(); //login("accountant", "accountant");
+        login(ACCOUNTANT_USER, TEST_PASSWORD);
     }
 
     private void loginAsManager() throws UserNotConnectedException {
-        login(); //login("manager", "manager");
+        login(MANAGER_USER, TEST_PASSWORD);
     }
 
-    private void loginAsUser() throws UserNotConnectedException {
-        login(); //loginAsTestUser();
-    }
 }
