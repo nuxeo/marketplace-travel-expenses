@@ -35,7 +35,7 @@ public class AccountExpense extends TaskElement {
     @FindBy(css = "core-field:nth-child(4) > span")
     public WebElement nature;
 
-    @FindBy(css = "core-field:nth-child(6) > input")
+    @FindBy(css = "core-field:nth-child(5) > input")
     public WebElement customerCode;
 
     public AccountExpense(WebDriver driver, WebElement element) {
