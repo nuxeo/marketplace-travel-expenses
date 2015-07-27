@@ -38,7 +38,7 @@ public class PolymerHelper {
     }
 
     public void flush() {
-        js.executeScript("Polymer.flush();");
+        js.executeScript("Polymer.dom.flush();");
     }
 
     public void tap(WebElement target) {
@@ -48,7 +48,7 @@ public class PolymerHelper {
     public void watchTransitions() {
         js.executeScript(
                 "window.polymerTransitionsDone = false;" +
-                "window.addEventListener('core-animated-pages-transition-end'," +
+                "window.addEventListener('neon-animation-finish'," +
                 "  function(e) { " +
                 "    window.polymerTransitionsDone = true;" +
                 "  })");

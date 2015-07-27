@@ -23,16 +23,16 @@ import org.openqa.selenium.support.FindBy;
 
 public class ValidateExpense extends TaskElement {
 
-    @FindBy(css = "core-field:nth-child(1) > span")
+    @FindBy(css = "paper-icon-item:nth-of-type(1) > span")
     public WebElement label;
 
-    @FindBy(css = "core-field:nth-child(2) > span")
+    @FindBy(css = "paper-icon-item:nth-of-type(2) > span")
     public WebElement amount;
 
-    @FindBy(css = "core-field:nth-child(3) > span")
+    @FindBy(css = "paper-icon-item:nth-of-type(3) > span")
     public WebElement description;
 
-    @FindBy(css = "core-field:nth-child(4) > span")
+    @FindBy(css = "paper-icon-item:nth-of-type(4) > span")
     public WebElement nature;
 
     public ValidateExpense(WebDriver driver, WebElement element) {

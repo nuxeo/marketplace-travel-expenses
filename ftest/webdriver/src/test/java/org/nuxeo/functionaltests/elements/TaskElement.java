@@ -38,17 +38,17 @@ public class TaskElement extends WebFragmentImpl {
 
     private final PolymerHelper polymer;
 
-    @FindBy(css = "* /deep/ core-field.actors")
+    @FindBy(css = ".field.actors")
     private WebElement actors;
 
-    @FindBy(css = "* /deep/ core-field.dueDate")
+    @FindBy(css = ".field.dueDate")
     private WebElement dueDate;
 
-    @FindBy(css = "* /deep/ core-field.directive")
+    @FindBy(css = ".field.directive")
     private WebElement directive;
 
     public static <T extends TaskElement> T of(Class<T> clazz) {
-        return AbstractTest.getWebFragment(By.cssSelector("* /deep/ nx-task"), clazz);
+        return AbstractTest.getWebFragment(By.tagName("nx-task"), clazz);
     }
 
     public TaskElement(WebDriver driver, WebElement element) {
@@ -57,14 +57,14 @@ public class TaskElement extends WebFragmentImpl {
     }
 
     public void action(String name) {
-        WebElement toolbar = findElement(By.cssSelector("* /deep/ core-toolbar"));
+        WebElement toolbar = findElement(By.tagName("paper-toolbar"));
         WebElement button = toolbar.findElement(By.cssSelector("paper-button[data-action='" + name + "']"));
         polymer.tap(button);
         new AjaxRequestManager(driver).waitForJQueryRequests();
     }
 
     public List<String> getActors() {
-        return actors.findElements(By.cssSelector("li"))
+        return actors.findElements(By.tagName("li"))
             .stream()
             .map(WebElement::getText)
             .collect(toList());

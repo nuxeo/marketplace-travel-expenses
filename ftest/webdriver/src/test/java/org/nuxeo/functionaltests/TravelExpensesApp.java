@@ -32,10 +32,10 @@ public class TravelExpensesApp extends AbstractPage {
 
     private final AjaxRequestManager ajax;
 
-    @FindBy(css = "* /deep/ paper-tab")
+    @FindBy(tagName = "paper-tab")
     List<WebElement> tabs;
 
-    @FindBy(css = "* /deep/ core-icon-button")
+    @FindBy(tagName = "paper-icon-button")
     WebElement backButton;
 
     public TravelExpensesApp(WebDriver driver) {
@@ -45,7 +45,7 @@ public class TravelExpensesApp extends AbstractPage {
     }
 
     public TaskListElement getTaskList() {
-        return getWebFragment(By.cssSelector("* /deep/ nx-task-list"), TaskListElement.class);
+        return getWebFragment(By.tagName("nx-task-list"), TaskListElement.class);
     }
 
     public TaskListElement gotoTaskList() {
@@ -54,7 +54,7 @@ public class TravelExpensesApp extends AbstractPage {
     }
 
     public WorkflowListElement getWorkflowList() {
-        return getWebFragment(By.cssSelector("* /deep/ nx-workflow-list"), WorkflowListElement.class);
+        return getWebFragment(By.tagName("nx-workflow-list"), WorkflowListElement.class);
     }
 
     public WorkflowListElement gotoWorkflowList() {
@@ -65,7 +65,8 @@ public class TravelExpensesApp extends AbstractPage {
     public void goBack() {
         polymer.watchTransitions();
         polymer.tap(backButton);
-        polymer.waitForTransitions();
+        //polymer.waitForTransitions();
+        polymer.flush();
         ajax.waitForJQueryRequests();
     }
 }

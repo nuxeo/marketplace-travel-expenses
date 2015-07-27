@@ -23,19 +23,19 @@ import org.openqa.selenium.support.FindBy;
 
 public class AccountExpense extends TaskElement {
 
-    @FindBy(css = "core-field:nth-child(1) > span")
+    @FindBy(css = "paper-icon-item:nth-of-type(1) > span")
     public WebElement label;
 
-    @FindBy(css = "core-field:nth-child(2) > span")
+    @FindBy(css = "paper-icon-item:nth-of-type(2) > span")
     public WebElement amount;
 
-    @FindBy(css = "core-field:nth-child(3) > span")
+    @FindBy(css = "paper-icon-item:nth-of-type(3) > span")
     public WebElement description;
 
-    @FindBy(css = "core-field:nth-child(4) > span")
+    @FindBy(css = "paper-icon-item:nth-of-type(4) > span")
     public WebElement nature;
 
-    @FindBy(css = "core-field:nth-child(5) > input")
+    @FindBy(css = "paper-icon-item:nth-of-type(5) > input")
     public WebElement customerCode;
 
     public AccountExpense(WebDriver driver, WebElement element) {

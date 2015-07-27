@@ -36,10 +36,10 @@ public class WorkflowListElement extends WebFragmentImpl {
 
     private final AjaxRequestManager ajax;
 
-    @FindBy(css = "* /deep/ core-list")
+    @FindBy(id = "list")
     private WebElement list;
 
-    @FindBy(css = "* /deep/ paper-fab")
+    @FindBy(tagName = "paper-fab")
     private WebElement createButton;
 
 
@@ -55,7 +55,7 @@ public class WorkflowListElement extends WebFragmentImpl {
     }
 
     public void deleteWorkflow(int idx) {
-        WebElement deleteBtn = getItem(idx).findElement(By.cssSelector("core-icon-button[icon='delete']"));
+        WebElement deleteBtn = getItem(idx).findElement(By.cssSelector("paper-icon-button[icon='delete']"));
         polymer.tap(deleteBtn);
         Alert alert = driver.switchTo().alert();
         alert.accept();
@@ -63,10 +63,10 @@ public class WorkflowListElement extends WebFragmentImpl {
     }
 
     public int size() {
-        return list.findElements(By.cssSelector("core-item:not([hidden])")).size();
+        return list.findElements(By.cssSelector("iron-item:not([hidden])")).size();
     }
 
     private WebElement getItem(int idx) {
-        return list.findElement(By.cssSelector("core-item:nth-of-type(" + (idx + 1) + ")"));
+        return list.findElement(By.cssSelector("iron-item:nth-of-type(" + (idx + 1) + ")"));
     }
 }
