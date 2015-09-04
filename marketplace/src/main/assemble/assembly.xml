@@ -17,8 +17,8 @@
     </copy>
 
     <copy todir="${outdir}/marketplace/install/bundles">
-      <artifact:resolveFile key="org.nuxeo.sample:nuxeo-travel-expenses::jar" />
-      <artifact:resolveFile key="nuxeo-studio:nuxeo-routing-expenses::jar" />
+      <artifact:file key="org.nuxeo.sample:nuxeo-travel-expenses" />
+      <artifact:resolveFile key="nuxeo-studio:nuxeo-routing-expenses" />
     </copy>
 
     <zip destfile="${outdir}/${maven.project.artifactId}-${maven.project.version}.zip"

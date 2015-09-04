@@ -13,6 +13,13 @@
   <packaging>zip</packaging>
   <name>Nuxeo Travel Expenses Marketplace package</name>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.nuxeo.sample</groupId>
+      <artifactId>nuxeo-travel-expenses</artifactId>
+    </dependency>
+  </dependencies>
+
   <build>
     <plugins>
       <plugin>

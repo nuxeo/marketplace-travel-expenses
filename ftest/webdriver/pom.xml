@@ -36,6 +36,19 @@
       <artifactId>nuxeo-functional-tests</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.nuxeo.marketplace.travelExpenses</groupId>
+      <artifactId>marketplace-travel-expenses</artifactId>
+      <type>zip</type>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.nuxeo.ecm.distribution</groupId>
+      <artifactId>nuxeo-distribution-tomcat</artifactId>
+      <classifier>nuxeo-cap</classifier>
+      <type>zip</type>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
