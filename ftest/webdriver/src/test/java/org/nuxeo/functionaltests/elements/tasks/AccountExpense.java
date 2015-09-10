@@ -33,9 +33,12 @@ public class AccountExpense extends TaskElement {
     public WebElement description;
 
     @FindBy(css = "paper-icon-item:nth-of-type(4) > span")
+    public WebElement department;
+
+    @FindBy(css = "paper-icon-item:nth-of-type(5) > span")
     public WebElement nature;
 
-    @FindBy(css = "paper-icon-item:nth-of-type(5) > input")
+    @FindBy(css = "paper-icon-item:nth-of-type(6) > input")
     public WebElement customerCode;
 
     public AccountExpense(WebDriver driver, WebElement element) {

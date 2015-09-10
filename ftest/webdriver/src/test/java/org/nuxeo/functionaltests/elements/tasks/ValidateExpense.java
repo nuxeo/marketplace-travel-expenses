@@ -33,6 +33,9 @@ public class ValidateExpense extends TaskElement {
     public WebElement description;
 
     @FindBy(css = "paper-icon-item:nth-of-type(4) > span")
+    public WebElement department;
+
+    @FindBy(css = "paper-icon-item:nth-of-type(5) > span")
     public WebElement nature;
 
     public ValidateExpense(WebDriver driver, WebElement element) {

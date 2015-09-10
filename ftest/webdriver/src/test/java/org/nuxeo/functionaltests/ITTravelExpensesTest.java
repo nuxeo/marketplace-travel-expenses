@@ -94,6 +94,7 @@ public class ITTravelExpensesTest extends AbstractTest {
         create.label.sendKeys("A label");
         create.amount.sendKeys("500");
         create.description.sendKeys("A description");
+        new Select(create.department).selectByValue("it");
         new Select(create.nature).selectByValue("transportation");
         create.action("submit");
 
@@ -120,6 +121,7 @@ public class ITTravelExpensesTest extends AbstractTest {
         assertEquals("A label", validate.label.getText());
         assertEquals("500", validate.amount.getText());
         assertEquals("A description", validate.description.getText());
+        assertEquals("it", validate.department.getText());
         assertEquals("transportation", validate.nature.getText());
         validate.action("validate");
 
@@ -147,6 +149,7 @@ public class ITTravelExpensesTest extends AbstractTest {
         assertEquals("A label", account.label.getText());
         assertEquals("A description", account.description.getText());
         assertEquals("500", account.amount.getText());
+        assertEquals("it", validate.department.getText());
         assertEquals("transportation", account.nature.getText());
 
         account.customerCode.sendKeys("C101");

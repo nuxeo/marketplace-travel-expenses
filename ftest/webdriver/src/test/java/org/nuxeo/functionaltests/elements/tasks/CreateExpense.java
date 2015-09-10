@@ -33,6 +33,9 @@ public class CreateExpense extends TaskElement {
     public WebElement description;
 
     @FindBy(css = "paper-icon-item:nth-of-type(4) > select")
+    public WebElement department;
+
+    @FindBy(css = "paper-icon-item:nth-of-type(5) > select")
     public WebElement nature;
 
     public CreateExpense(WebDriver driver, WebElement element) {
