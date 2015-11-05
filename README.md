@@ -15,12 +15,11 @@ To run functional tests:
 
     mvn clean install -Pftest
 
-## Installing
+## Deploying
 
-To install the package:
+Install [the nuxeo-travel-expenses Package](https://connect.nuxeo.com/nuxeo/site/marketplace/package/nuxeo-travel-expenses).
 
- 1. Take a fresh Nuxeo CAP (>= 7.2).
+## QA Results
 
- 2. Install the nuxeo-travel-expenses package:
-      - From the AdminCenter (Upload + install)
-      - From the command line using `nuxeoctl mp-install package.zip`
+[![Build Status](https://qa.nuxeo.org/jenkins/buildStatus/icon?job=addons_FT_nuxeo-travel-expenses-master)](https://qa.nuxeo.org/jenkins/job/addons_FT_nuxeo-travel-expenses-master/)
+
