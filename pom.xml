@@ -14,7 +14,7 @@
   <name>Marketplace package of Travel Expenses sample</name>
 
   <properties>
-    <nuxeo.travelExpenses.version>1.0-SNAPSHOT</nuxeo.travelExpenses.version>
+    <nuxeo.studio-routing-expenses.version>0.0.0-SNAPSHOT</nuxeo.studio-routing-expenses.version>
   </properties>
 
   <modules>
@@ -27,19 +27,13 @@
       <dependency>
         <groupId>org.nuxeo.marketplace.travelExpenses</groupId>
         <artifactId>marketplace-travel-expenses</artifactId>
-        <version>${nuxeo.travelExpenses.version}</version>
+        <version>${project.version}</version>
         <type>zip</type>
-      </dependency>
-      <!-- TODO move nuxeo-travel-expenses dependencyManamgent to addons/pom.xml -->
-      <dependency>
-        <groupId>org.nuxeo.sample</groupId>
-        <artifactId>nuxeo-travel-expenses</artifactId>
-        <version>${nuxeo.travelExpenses.version}</version>
       </dependency>
       <dependency>
         <groupId>nuxeo-studio</groupId>
         <artifactId>nuxeo-routing-expenses</artifactId>
-        <version>0.0.0-SNAPSHOT</version>
+        <version>${nuxeo.studio-routing-expenses.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
