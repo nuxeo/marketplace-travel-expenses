@@ -36,6 +36,7 @@ import java.net.MalformedURLException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assume.assumeTrue;
 
 /**
  * Nuxeo Travel Expenses Tests
@@ -180,6 +181,7 @@ public class ITTravelExpensesTest extends AbstractTest {
 
     @Before
     public void setUp() throws UserNotConnectedException {
+        onlyRunOnChrome();
         if (isSetupDone) {
             return;
         }
@@ -253,4 +255,13 @@ public class ITTravelExpensesTest extends AbstractTest {
         login(MANAGER_USER, TEST_PASSWORD);
     }
 
+    /**
+     * Only run on chrome.
+     *
+     * @since 7.10
+     */
+    protected void onlyRunOnChrome() {
+        String browser = driver.getCapabilities().getBrowserName();
+        assumeTrue("Test can only be run on chrome.", "chrome".equals(browser));
+    }
 }
