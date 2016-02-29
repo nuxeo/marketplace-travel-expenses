@@ -60,7 +60,7 @@ public class TaskElement extends WebFragmentImpl {
         WebElement toolbar = findElement(By.tagName("paper-toolbar"));
         WebElement button = toolbar.findElement(By.cssSelector("paper-button[data-action='" + name + "']"));
         polymer.tap(button);
-        new AjaxRequestManager(driver).waitForJQueryRequests();
+        new AjaxRequestManager(driver).waitForJsClient();
     }
 
     public List<String> getActors() {

@@ -65,7 +65,6 @@ public class TravelExpensesApp extends AbstractPage {
     public void goBack() {
         polymer.watchTransitions();
         polymer.tap(backButton);
-        //polymer.waitForTransitions();
         polymer.flush();
         ajax.waitForJQueryRequests();
     }

@@ -51,7 +51,7 @@ public class WorkflowListElement extends WebFragmentImpl {
 
     public void startWorkflow() {
         polymer.tap(createButton);
-        ajax.waitForJQueryRequests();
+        ajax.waitForJsClient();
     }
 
     public void deleteWorkflow(int idx) {
@@ -59,7 +59,7 @@ public class WorkflowListElement extends WebFragmentImpl {
         polymer.tap(deleteBtn);
         Alert alert = driver.switchTo().alert();
         alert.accept();
-        ajax.waitForJQueryRequests();
+        ajax.waitForJsClient();
     }
 
     public int size() {

@@ -51,7 +51,7 @@ public class TaskListElement extends WebFragmentImpl {
 
     public void createTask() {
         polymer.tap(createButton);
-        ajax.waitForJQueryRequests();
+        ajax.waitForJsClient();
     }
 
     public void deleteTask(int idx) {
@@ -59,15 +59,13 @@ public class TaskListElement extends WebFragmentImpl {
         polymer.tap(deleteBtn);
         Alert alert = driver.switchTo().alert();
         alert.accept();
-        ajax.waitForJQueryRequests();
+        ajax.waitForJsClient();
     }
 
     public void selectTask(int idx) {
-        //polymer.watchTransitions();
         polymer.tap(getItem(idx));
         polymer.flush();
-        //polymer.waitForTransitions();
-        ajax.waitForJQueryRequests();
+        ajax.waitForJsClient();
     }
 
     public int size() {
