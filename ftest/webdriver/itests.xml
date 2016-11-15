@@ -10,10 +10,13 @@
   <import file="${out.dir}/nuxeo-ftest.xml" />
 
   <!-- Instruction for installing the MP to be tested -->
-  <property name="mp.install" value="file:${out.dir}/marketplace-travel-expenses-${maven.project.version}.zip" />
+  <property name="mp.install"
+            value="file:${out.dir}/nuxeo-marketplace-jsf-ui-${nuxeo.distribution.version}.zip,
+    file:${out.dir}/marketplace-travel-expenses-${maven.project.version}.zip" />
   <!-- Override default prepare-environment target to make it download your MP -->
   <target name="prepare-environment" depends="_init,prepare-db,prepare-tomcat">
     <copy todir="${out.dir}">
+      <artifact:file key="org.nuxeo.ecm.distribution:nuxeo-marketplace-jsf-ui::zip" />
       <artifact:file key="org.nuxeo.marketplace.travelExpenses:marketplace-travel-expenses::zip" />
     </copy>
   </target>
