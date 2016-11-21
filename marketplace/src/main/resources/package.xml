@@ -1,7 +1,7 @@
 <package type="addon" name="nuxeo-travel-expenses" version="@VERSION@">
   <title>Nuxeo Travel Expenses</title>
   <description>
-    <p>This is a sample addon to demonstrate usage of the Workflow REST API.</p>
+    <p>The Travel Expenses addon is a sample addon that provides a dedicated UI for managing travel expenses (accomodation, food or transportation). The purpose of the addon is to demonstrate usage of the Workflow REST API.</p>
   </description>
   <home-page></home-page>
   <vendor>Nuxeo</vendor>
